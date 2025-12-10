@@ -2,6 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,12 +18,19 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rigid;
 
+    private bool _isAttacking = false;
+
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        AnimatorStateInfo attackDelay = _anim.GetCurrentAnimatorStateInfo(0);
+        Debug.Log("currentAnimation :" + attackDelay);
+    }
     private void FixedUpdate()
     {
         if (_moveVelocity.magnitude > 0.1f)
@@ -56,6 +64,42 @@ public class PlayerController : MonoBehaviour
         }
 
         _moveVelocity = new Vector3(MoveInput.x, 0, MoveInput.y).normalized;
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed && !_isAttacking)
+        {
+            Attack2();
+            //StartCoroutine(Attack());
+        }
+    }
+
+    private void Attack2()
+    {
+        Debug.Log("공격!");
+        _isAttacking = true;
+        _anim.SetTrigger("Attack");
+    }
+
+    public void EndAttack()
+    {
+        Debug.Log("공격 완료!");
+        _isAttacking = false;
+    }
+    private IEnumerator Attack()
+    {
+        Debug.Log("공격!");
+        _isAttacking = true;
+        _anim.SetTrigger("Attack");
+        AnimatorStateInfo attackDelay = _anim.GetCurrentAnimatorStateInfo(1);
+        while (attackDelay.normalizedTime >= 1.0f)
+        {
+            yield return null;
+        }
+        yield return new WaitForEndOfFrame();
+        Debug.Log("공격 완료!");
+        _isAttacking = false;
     }
 
 }
