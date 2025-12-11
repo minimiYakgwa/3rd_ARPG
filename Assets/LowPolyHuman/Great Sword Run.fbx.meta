@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 07c0c68d8a06da249833e37e03cfed8d
+guid: 2eb2903ca0db9b14ab3a99732d97fbb0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Low_Poly_Human_Walk
+      name: Low_Poly_Human_Run
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 41
+      lastFrame: 18
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
